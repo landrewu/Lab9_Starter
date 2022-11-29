@@ -6,6 +6,13 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lab 9</title>
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+  <script>
+    window.TrackJS && TrackJS.install({ 
+      token: "62c9dd95798541bb95c5e63500e963c1"
+      // for more configuration options, see https://docs.trackjs.com
+    });
+  </script>
 
   <style>
     button {
@@ -88,6 +95,7 @@
   </main>
 
   <script>
+    TrackJS.track('Testing TrackJS!');
     let form = document.querySelector('form');
     form.addEventListener('submit', e => {
       e.preventDefault();
@@ -102,6 +110,116 @@
 
     // Start your code here
     // You may move this JS to another file if you wish
+    let logButton = errorBtns[0];
+    logButton.onclick = () => {
+      console.log("Console Log Demo");
+    }
+    let errorButton = errorBtns[1];
+    errorButton.onclick = () => {
+      console.error("Console Error Demo");
+    }
+    let countButton = errorBtns[2];
+    countButton.onclick = () => {
+      console.count("Count Button");
+    }
+    let warnButton = errorBtns[3];
+    warnButton.onclick = () => {
+      console.warn("Console Warn Demo");
+    }
+    let assertButton = errorBtns[4];
+    assertButton.onclick = () => {
+      let x = 3;
+      let y = 2;
+      let reason = "x should be less than y";
+      console.assert(x < y, {x, y, reason});
+    }
+    let clearButton = errorBtns[5];
+    clearButton.onclick = () => {
+      console.clear();
+    }
+    let dirButton = errorBtns[6];
+    dirButton.onclick = () => {
+      console.dir(document.body);
+    }
+    let dirxmlButton = errorBtns[7];
+    dirxmlButton.onclick = () => {
+      console.dirxml(document.body);
+    }
+    let groupStartButton = errorBtns[8];
+    groupStartButton.onclick = () => {
+      console.group("newGroup");
+    }
+    let groupEndButton = errorBtns[9];
+    groupEndButton.onclick = () => {
+      console.groupEnd("newGroup");
+    }
+    let tableButton = errorBtns[10];
+    tableButton.onclick = () => {
+      const teachers = [
+        {
+          first: 'Miles',
+          last: 'Jones'
+        },
+        {
+          first: 'Thomas',
+          last: 'Powell'
+        },
+        {
+          first: 'Keith',
+          last: 'Muller'
+        }
+      ];
+      console.table(teachers);
+    }
+    let timerStartButton = errorBtns[11];
+    timerStartButton.onclick = () => {
+      console.time("Timer Button");
+      console.log("Timer Started");
+    }
+    let timerEndButton = errorBtns[12];
+    timerEndButton.onclick = () => {
+      console.timeEnd("Timer");
+    }
+    let traceButton = errorBtns[13];
+    traceButton.onclick = () => {
+      const yum = () => { yumyum(); };
+      const yumyum = () => { yumyumyum(); };
+      const yumyumyum = () => { yumyumyumyum(); };
+      const yumyumyumyum = () => { console.trace(); };
+      yum();
+    }
+    class NewError extends Error {
+      constructor(message, cause) {
+        super(message);
+        this.cause = cause;
+        this.name = "NewError";
+      }
+    }
+    let globalErrorButton = errorBtns[14];
+    globalErrorButton.onclick = () => {
+      try {
+        let x = 3;
+        let y = 2;
+        if (x > y) throw new NewError("X is too massive");
+      } catch {
+        console.error("Error Detected");
+      } finally {
+        console.log("Operation finished");
+      }
+
+      window.onerror = (error) => {
+        console.error(error);
+      }
+      window.catchError();
+      (async function(){
+          try {
+            let foo= ((await(await fetch(boom)).json()));
+          } catch(error) {
+            //console.log(error);
+          }
+      })
+    }
+
   </script>
 </body>
 
